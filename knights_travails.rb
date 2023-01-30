@@ -1,9 +1,14 @@
+require_relative "00_tree_node.rb"
+
 class KnightPathFinder
-attr_reader :position, :considered_positions
+attr_reader :position, :considered_positions, :node
     def initialize(position)
+        # @node = PolyTreeNode.new(pos) 
         @position = position
         @considered_positions = [position]
     end
+
+
 
 
     def self.valid_moves(pos)     
@@ -69,15 +74,24 @@ attr_reader :position, :considered_positions
     moves
    end
 
-   def bfs(start_pos)
+   def build_move_tree
     
-    positions = [start_pos]
-
-    until positions.empty?
-        pos = positions.shift
-        positions.concat(new_move_positions(pos))
+    queue = [PolyTreeNode.new(self.position)]
+     
+    count = 0
+    until queue.empty?
+        root_node = queue.shift
+        # poly = PolyTreeNode.new(pos)
+        # root_node.children = new_move_positions(pos)
+        new_move_positions(root_node.value).each do |pos|
+            node = PolyTreeNode.new(pos)
+            root_node.children << node
+            node.parent = root_node
+            queue << node
+            count += 1
+        end
     end
-    return true
+    return count
    end
    
 end
