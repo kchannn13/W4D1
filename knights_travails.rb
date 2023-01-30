@@ -2,11 +2,11 @@ require_relative "00_tree_node.rb"
 require "byebug"
 
 class KnightPathFinder
-attr_reader :position, :considered_positions, :node
+attr_reader :position, :considered_positions, :node, :root_node
     def initialize(position)
-        # @node = PolyTreeNode.new(pos) 
         @position = position
         @considered_positions = [position]
+        @root_node = PolyTreeNode.new(position)
     end
 
 
@@ -77,43 +77,34 @@ attr_reader :position, :considered_positions, :node
 
    def build_move_tree
     
-    queue = [PolyTreeNode.new(self.position)]
+    queue = [@root_node]
      
-    # count = 0
     until queue.empty?
-        root_node = queue.shift
-        # if queue.shift != []
-        #     count += 1
-        # end
-        # poly = PolyTreeNode.new(pos)
-        # root_node.children = new_move_positions(pos)
-        new_move_positions(root_node.value).each do |pos|
+        parent_node = queue.shift
+        new_move_positions(parent_node.value).each do |pos|
             node = PolyTreeNode.new(pos)
-            root_node.children << node
-            node.parent = root_node
+            parent_node.children << node
+            node.parent = parent_node
             queue << node
         end
     end
-    # return count
    end
 
 
 
    def find_path(end_pos)
-    # nodes = [self]
-    nodes = [PolyTreeNode.new(self.position)]
-debugger
-    until nodes.empty?
-        node = nodes.shift
-        return node if node.value == end_pos
+    nodes = [@root_node]
         
-        nodes.concat(node.children)
-    end
-    
+# debugger
+        until nodes.empty?
+            node = nodes.shift
+            return node if node.value == end_pos
+            nodes << node.children
+        end
    end 
    
 end
 
-k = KnightPathFinder.new([0,0])
-k.build_move_tree
-k.find_path([6,3])
+# k = KnightPathFinder.new([0,0])
+# k.build_move_tree
+# k.find_path([6,3])
