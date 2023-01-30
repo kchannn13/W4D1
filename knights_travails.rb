@@ -1,5 +1,5 @@
 class KnightPathFinder
-
+attr_reader :position, :considered_positions
     def initialize(position)
         @position = position
         @considered_positions = [position]
@@ -10,14 +10,6 @@ class KnightPathFinder
         valid_pos = []
 
         x, y = pos
-
-        # if x < 6 && y < 7
-        #     x += 2
-        #     y += 1
-        # end
-        # valid_pos << [x,y]
-        # return valid_pos
-
 
         x += 2
         y += 1
@@ -77,8 +69,9 @@ class KnightPathFinder
     moves
    end
 
-   def bfs(@position)
-    positions = [@position]
+   def bfs(start_pos)
+    
+    positions = [start_pos]
 
     until positions.empty?
         pos = positions.shift
