@@ -57,7 +57,7 @@ attr_reader :position, :considered_positions, :node
         x, y = pos
 
         valid_pos.select do |pos|
-            (pos[0] >= 0 && pos[0] <= 8) && (pos[1] >= 0 && pos[1] <= 8)
+            (pos[0] >= 0 && pos[0] <= 7) && (pos[1] >= 0 && pos[1] <= 7)
         end
     end
 
@@ -78,9 +78,12 @@ attr_reader :position, :considered_positions, :node
     
     queue = [PolyTreeNode.new(self.position)]
      
-    count = 0
+    # count = 0
     until queue.empty?
         root_node = queue.shift
+        # if queue.shift != []
+        #     count += 1
+        # end
         # poly = PolyTreeNode.new(pos)
         # root_node.children = new_move_positions(pos)
         new_move_positions(root_node.value).each do |pos|
@@ -88,10 +91,9 @@ attr_reader :position, :considered_positions, :node
             root_node.children << node
             node.parent = root_node
             queue << node
-            count += 1
         end
     end
-    return count
+    # return count
    end
    
 end
