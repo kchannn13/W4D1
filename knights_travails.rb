@@ -1,4 +1,5 @@
 require_relative "00_tree_node.rb"
+require "byebug"
 
 class KnightPathFinder
 attr_reader :position, :considered_positions, :node
@@ -95,5 +96,24 @@ attr_reader :position, :considered_positions, :node
     end
     # return count
    end
+
+
+
+   def find_path(end_pos)
+    # nodes = [self]
+    nodes = [PolyTreeNode.new(self.position)]
+debugger
+    until nodes.empty?
+        node = nodes.shift
+        return node if node.value == end_pos
+        
+        nodes.concat(node.children)
+    end
+    
+   end 
    
 end
+
+k = KnightPathFinder.new([0,0])
+k.build_move_tree
+k.find_path([6,3])
