@@ -64,7 +64,6 @@ class KnightPathFinder
         end
     end
 
-
    def new_move_positions(pos)
     possible_moves = KnightPathFinder.valid_moves(pos)
     moves = []
@@ -75,13 +74,17 @@ class KnightPathFinder
             moves << move
         end
     end
-
     moves
-
    end
 
+   def bfs(@position)
+    positions = [@position]
 
-
-
-
+    until positions.empty?
+        pos = positions.shift
+        positions.concat(new_move_positions(pos))
+    end
+    return true
+   end
+   
 end
